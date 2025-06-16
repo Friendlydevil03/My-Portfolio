@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Download, Mail, ExternalLink } from 'lucide-react';
+import { Eye, Mail, ExternalLink } from 'lucide-react';
 import ParticleBackground from './ParticleBackground';
 
 const Hero = () => {
@@ -9,6 +9,11 @@ const Hero = () => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const viewResume = () => {
+    // Open the resume PDF in a new tab
+    window.open('/resume.pdf', '_blank');
   };
 
   return (
