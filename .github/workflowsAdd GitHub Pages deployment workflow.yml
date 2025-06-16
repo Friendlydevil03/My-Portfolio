@@ -1,6 +1,5 @@
 We need to add a GitHub Actions workflow file to automatically build and deploy the Vite React application to GitHub Pages.
 
-Create a new file at `.github/workflows/deploy.yml` with the following content:
 
 ```yaml
 name: Deploy to GitHub Pages
