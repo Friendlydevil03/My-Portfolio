@@ -11,11 +11,6 @@ const Hero = () => {
     }
   };
 
-  const viewResume = () => {
-    // Open the resume PDF in a new tab
-    window.open('/resume.pdf', '_blank');
-  };
-
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
       <ParticleBackground />
