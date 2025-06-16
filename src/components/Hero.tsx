@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Eye, Mail, ExternalLink } from 'lucide-react';
+import { Download, Mail, ExternalLink } from 'lucide-react';
 import ParticleBackground from './ParticleBackground';
 
 const Hero = () => {
