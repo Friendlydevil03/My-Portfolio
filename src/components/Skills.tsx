@@ -23,7 +23,8 @@ const Skills = () => {
     {
       title: 'Graphic Designer',
       skills: [
-        { name: 'Adobe Photoshop, Illustrator, InDesign', level: 75 },
+        { name: 'Adobe Photoshop', level: 75 },
+          { name: 'Illustrator', level: 75 },
         { name: 'Figma, Adobe XD, Canva', level: 70 },
       ]
     },

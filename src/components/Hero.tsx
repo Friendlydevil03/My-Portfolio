@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Download, Mail, ExternalLink } from 'lucide-react';
+import { Eye, Mail, ExternalLink } from 'lucide-react';
 import ParticleBackground from './ParticleBackground';
 
 const Hero = () => {
@@ -9,6 +8,11 @@ const Hero = () => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const viewResume = () => {
+    // Open the resume PDF in a new tab with the correct base URL
+    window.open('/My-Portfolio/resume.pdf', '_blank');
   };
 
   return (
@@ -49,9 +53,12 @@ const Hero = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 hover:scale-105">
-              <Download size={20} />
-              Download Resume
+            <button 
+              onClick={viewResume}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 hover:scale-105"
+            >
+              <Eye size={20} />
+              View Resume
             </button>
             
             <button 
