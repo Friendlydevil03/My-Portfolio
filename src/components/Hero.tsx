@@ -18,21 +18,9 @@ const Hero = () => {
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
       <ParticleBackground />
-      
+
       <div className="relative z-10 container mx-auto px-6 text-center">
         <div className="max-w-4xl mx-auto">
-          {/* Profile Image */}
-          <div className="mb-8">
-            <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-r from-blue-400 to-purple-500 p-1 hover:scale-105 transition-transform duration-300">
-              <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
-                <img 
-                  src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=300&h=300&fit=crop&crop=face" 
-                  alt="Profile" 
-                  className="w-full h-full rounded-full object-cover"
-                />
-              </div>
-            </div>
-          </div>
 
           {/* Main Content */}
           <h1 className="text-5xl md:text-7xl font-bold text-gray-800 mb-6 animate-fade-in">
@@ -43,7 +31,7 @@ const Hero = () => {
           </h1>
 
           <p className="text-xl md:text-2xl text-gray-600 mb-8 animate-fade-in">
-            DevOps Engineer | Graphic Designer | full-stack Developer
+            DevOps Engineer | Graphic Designer | Full-stack Developer
           </p>
 
           <p className="text-lg text-gray-500 mb-12 max-w-2xl mx-auto animate-fade-in">

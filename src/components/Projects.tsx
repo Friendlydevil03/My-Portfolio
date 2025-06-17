@@ -1,31 +1,83 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ExternalLink, Github, X } from 'lucide-react';
+import { ExternalLink, Github, X, ChevronLeft, ChevronRight, Download } from 'lucide-react';
+import designImage1 from '../assets/final10.png';
+import designImage2 from '../assets/nexus2.png';
+import designImage3 from '../assets/conver.png';
+import designImage4 from '../assets/1 fa.png';
+import designImage5 from '../assets/1 faculty.png';
+import designImage6 from '../assets/1 indusrty.png';
+import designImage7 from '../assets/1 industry.png';
+import designImage8 from '../assets/conv logo.png';
+import designImage9 from '../assets/logo.jpg';
+import designImage10 from '../assets/logo.png';
+import designImage11 from '../assets/nexus logo.png';
+
+
+interface BaseProject {
+  id: number;
+  title: string;
+  shortDescription: string;
+  fullDescription: string;
+  image: string;
+  techStack: string[];
+  features: string[];
+  githubUrl?: string;
+  liveUrl?: string;
+}
+
+type CodeProject = BaseProject;
+
+
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
   const [projectType, setProjectType] = useState<'code' | 'design'>('code');
+  const [lightboxOpen, setLightboxOpen] = useState<boolean>(false);
+  const [lightboxImage, setLightboxImage] = useState<string>('');
+  const [lightboxTitle, setLightboxTitle] = useState<string>('');
   const modalRef = useRef<HTMLDivElement>(null);
+  const lightboxRef = useRef<HTMLDivElement>(null);
 
-  // Handle clicks outside the modal
+  // Handle clicks outside modal/lightbox
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      if (selectedProject !== null && modalRef.current && !modalRef.current.contains(event.target as Node)) {
         setSelectedProject(null);
+      }
+      if (lightboxOpen && lightboxRef.current && !lightboxRef.current.contains(event.target as Node)) {
+        setLightboxOpen(false);
       }
     }
 
-    // Add event listener when modal is open
-    if (selectedProject !== null) {
+    if (selectedProject !== null || lightboxOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     }
 
-    // Clean up the event listener
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [selectedProject]);
+  }, [selectedProject, lightboxOpen]);
 
-  const codeProjects = [
+  // Handle keyboard events for lightbox (escape to close, arrow keys for navigation)
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (lightboxOpen) {
+        if (event.key === 'Escape') {
+          setLightboxOpen(false);
+        }
+      }
+    }
+
+    if (lightboxOpen) {
+      document.addEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [lightboxOpen]);
+
+  const codeProjects: CodeProject[] = [
     {
       id: 1,
       title: 'Smart Vehicle Parking Management System',
@@ -73,62 +125,69 @@ const Projects = () => {
   const designProjects = [
     {
       id: 101,
-      title: 'Eco-Friendly Campaign Posters',
-      shortDescription: 'A series of vibrant posters promoting environmental awareness',
-      fullDescription: 'This series of poster designs was created for an environmental awareness campaign targeting young adults. The designs incorporate bold typography, vibrant gradients, and minimalist illustrations to convey important messages about sustainability and eco-friendly practices in an engaging way.',
-      image: 'https://images.unsplash.com/photo-1576153192621-7a3be10b356e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-      techStack: ['Adobe Illustrator', 'Adobe Photoshop', 'Procreate'],
-      githubUrl: '',
-      liveUrl: 'https://www.behance.net/',
-      features: [
-        'Bold typography with custom lettering',
-        'Vibrant color gradients for visual impact',
-        'Minimalist illustration style',
-        'Responsive layout adapting to different display formats',
-        'Concise messaging for quick comprehension',
-        'Consistent visual language across the series'
-      ]
+      image: designImage1,
     },
     {
       id: 102,
-      title: 'Tech Startup Brand Identity',
-      shortDescription: 'Complete brand identity design for an AI tech startup',
-      fullDescription: 'This comprehensive brand identity was developed for a cutting-edge AI technology startup entering the market. The project includes logo design in various applications, typography guidelines, color palette development, and marketing materials. The design language balances innovation and trustworthiness through geometric shapes and a modern color scheme.',
-      image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80',
-      techStack: ['Adobe Illustrator', 'Adobe InDesign', 'Figma'],
-      githubUrl: '',
-      liveUrl: 'https://dribbble.com/',
-      features: [
-        'Responsive logo system adaptable across platforms',
-        'Custom typography pairing for unique brand voice',
-        'Strategic color palette reflecting company values',
-        'Business card, letterhead, and stationery designs',
-        'Social media asset templates',
-        'Comprehensive brand guidelines document'
-      ]
+      image: designImage2,
     },
     {
       id: 103,
-      title: 'Mobile App UI Motion Design',
-      shortDescription: 'Animated UI design for a fitness tracking application',
-      fullDescription: 'This project showcases animated UI designs for a fitness tracking mobile application. The animations enhance user experience by providing visual feedback for interactions and guiding users through the app flow. Special attention was given to smooth transitions, micro-interactions, and performance optimization while maintaining the app\'s vibrant and energetic brand personality.',
-      image: 'https://images.unsplash.com/photo-1559028012-481c04fa702d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-      techStack: ['Adobe After Effects', 'Principle', 'Figma', 'Lottie'],
+      image: designImage3,
+    },{
+      id: 104,
+      image: designImage4,
+    },{
+      id: 105,
+      image: designImage5,
+    },{
+      id: 106,
+      image: designImage6,
+    },{
+      id: 107,
+      image: designImage7,
+    },{
+      id: 108,
+      image: designImage8,
+    },{
+      id: 109,
+      image: designImage9,
+    },{
+      id: 110,
+      image: designImage10,
+    },
+    {
+      id: 111,
+      title: 'Typography Exploration Series',
+      shortDescription: 'Experimental typography and lettering',
+      fullDescription: 'A personal exploration series focused on pushing the boundaries of typography and lettering. This project experiments with various techniques including hand-lettering, 3D typography, and animated type to create visually striking compositions.',
+      image: designImage11,
+      techStack: ['Adobe Illustrator', 'Procreate', 'Cinema 4D', 'After Effects'],
       githubUrl: '',
-      liveUrl: 'https://dribbble.com/',
+      liveUrl: 'https://www.instagram.com/',
       features: [
-        'Microinteractions for immediate user feedback',
-        'Screen transition animations',
-        'Data visualization animations for workout metrics',
-        'Loading state animations',
-        'Achievement celebration animations',
-        'Exported as Lottie files for developer implementation'
-      ]
+        'Custom hand-lettering',
+        'Experimental 3D typography',
+        'Animated type explorations',
+        'Mixed media techniques',
+        'Typography as visual art',
+        'Weekly practice series'
+      ],
+      category: 'Typography'
     }
   ];
 
   // Get current projects based on selected type
   const projects = projectType === 'code' ? codeProjects : designProjects;
+
+  // Find the currently selected project from all projects
+  const selectedProjectData = [...codeProjects, ...designProjects].find(p => p.id === selectedProject);
+
+  const openLightbox = (image: string, title: string) => {
+    setLightboxImage(image);
+    setLightboxTitle(title);
+    setLightboxOpen(true);
+  };
 
   return (
     <section id="projects" className="py-20 bg-white">
@@ -165,77 +224,112 @@ const Projects = () => {
             </div>
           </div>
 
-          {/* Project Grid with Animation */}
-          <div className="grid md:grid-cols-2 gap-8">
-            {projects.map((project) => (
-              <div
-                key={project.id}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer animate-fade-in"
-                style={{ animationDelay: `${(project.id % 10) * 100}ms` }}
-                onClick={() => setSelectedProject(project.id)}
-              >
-                <div className="relative overflow-hidden group">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end">
-                    <div className="p-4 text-white">
-                      <h4 className="font-medium">{project.title}</h4>
+          {/* Project Display - Different layout based on project type */}
+          {projectType === 'code' ? (
+            // Code Projects Grid
+            <div className="grid md:grid-cols-2 gap-8">
+              {projects.map((project) => (
+                <div
+                  key={project.id}
+                  className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer animate-fade-in"
+                  style={{ animationDelay: `${(project.id % 10) * 100}ms` }}
+                  onClick={() => setSelectedProject(project.id)}
+                >
+                  <div className="relative overflow-hidden group">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end">
+                      <div className="p-4 text-white">
+                        <h4 className="font-medium">{project.title}</h4>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-6">
+                    <h3 className="text-xl font-semibold text-gray-800 mb-3">
+                      {project.title}
+                    </h3>
+                    <p className="text-gray-600 mb-4">
+                      {project.shortDescription}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.techStack.slice(0, 3).map((tech) => (
+                        <span
+                          key={tech}
+                          className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                      {project.techStack.length > 3 && (
+                        <span className="text-gray-500 text-xs">
+                          +{project.techStack.length - 3} more
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex gap-3">
+                      {project.githubUrl && (
+                        <a
+                          href={project.githubUrl}
+                          className="flex items-center gap-1 text-gray-600 hover:text-gray-800 transition-colors"
+                          onClick={(e) => e.stopPropagation()}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Github size={16} />
+                          <span className="text-sm">Code</span>
+                        </a>
+                      )}
+                      {project.liveUrl && (
+                        <a
+                          href={project.liveUrl}
+                          className="flex items-center gap-1 text-gray-600 hover:text-gray-800 transition-colors"
+                          onClick={(e) => e.stopPropagation()}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <ExternalLink size={16} />
+                          <span className="text-sm">Live Demo</span>
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
-
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3">
-                    {project.title}
-                  </h3>
-                  <p className="text-gray-600 mb-4">
-                    {project.shortDescription}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.techStack.slice(0, 3).map((tech) => (
-                      <span
-                        key={tech}
-                        className={`${
-                          projectType === 'code' 
-                            ? 'bg-blue-100 text-blue-800' 
-                            : 'bg-purple-100 text-purple-800'
-                        } px-2 py-1 rounded text-xs font-medium`}
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                    {project.techStack.length > 3 && (
-                      <span className="text-gray-500 text-xs">
-                        +{project.techStack.length - 3} more
-                      </span>
-                    )}
+              ))}
+            </div>
+          ) : (
+            // Design Projects Gallery
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+              {designProjects.map((project) => (
+                <div
+                  key={project.id}
+                  className="group relative overflow-hidden rounded-lg shadow-md transition-all duration-300 animate-fade-in"
+                  style={{ animationDelay: `${(project.id % 10) * 100}ms` }}
+                  onClick={() => openLightbox(project.image, project.title)}
+                >
+                  <div className="aspect-[4/3] w-full">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
                   </div>
-
-                  <div className="flex gap-3">
-                    {project.githubUrl && (
-                      <a
-                        href={project.githubUrl}
-                        className="flex items-center gap-1 text-gray-600 hover:text-gray-800 transition-colors"
-                        onClick={(e) => e.stopPropagation()}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Github size={16} />
-                        <span className="text-sm">Code</span>
-                      </a>
-                    )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-4">
+                    <p className="text-white font-medium text-sm md:text-base">{project.title}</p>
+                    <p className="text-gray-200 text-xs md:text-sm">{project.category}</p>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
-          {/* Project Modal */}
-          {selectedProject && (
+          {/* Project Modal for Code Projects */}
+          {selectedProject && selectedProjectData && projectType === 'code' && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 animate-fade-in">
               <div
                 ref={modalRef}
@@ -244,7 +338,7 @@ const Projects = () => {
                 <div className="p-6">
                   <div className="flex justify-between items-start mb-6">
                     <h3 className="text-2xl font-bold text-gray-800">
-                      {[...codeProjects, ...designProjects].find(p => p.id === selectedProject)?.title}
+                      {selectedProjectData.title}
                     </h3>
                     <button
                       onClick={() => setSelectedProject(null)}
@@ -254,60 +348,100 @@ const Projects = () => {
                     </button>
                   </div>
 
-                  {selectedProject && (
-                    <div className="space-y-6">
-                      <img
-                        src={[...codeProjects, ...designProjects].find(p => p.id === selectedProject)?.image}
-                        alt={[...codeProjects, ...designProjects].find(p => p.id === selectedProject)?.title}
-                        className="w-full h-64 object-cover rounded-lg"
-                      />
+                  <div className="space-y-6">
+                    <img
+                      src={selectedProjectData.image}
+                      alt={selectedProjectData.title}
+                      className="w-full h-64 object-cover rounded-lg"
+                    />
 
-                      <p className="text-gray-700 leading-relaxed">
-                        {[...codeProjects, ...designProjects].find(p => p.id === selectedProject)?.fullDescription}
-                      </p>
+                    <p className="text-gray-700 leading-relaxed">
+                      {selectedProjectData.fullDescription}
+                    </p>
 
-                      <div>
-                        <h4 className="text-lg font-semibold text-gray-800 mb-3">Key Features</h4>
-                        <ul className="list-disc list-inside text-gray-700 space-y-1">
-                          {[...codeProjects, ...designProjects].find(p => p.id === selectedProject)?.features.map((feature, index) => (
-                            <li key={index}>{feature}</li>
-                          ))}
-                        </ul>
-                      </div>
+                    <div>
+                      <h4 className="text-lg font-semibold text-gray-800 mb-3">Key Features</h4>
+                      <ul className="list-disc list-inside text-gray-700 space-y-1">
+                        {selectedProjectData.features.map((feature, index) => (
+                          <li key={index}>{feature}</li>
+                        ))}
+                      </ul>
+                    </div>
 
-                      <div>
-                        <h4 className="text-lg font-semibold text-gray-800 mb-3">Tools & Technologies</h4>
-                        <div className="flex flex-wrap gap-2">
-                          {[...codeProjects, ...designProjects].find(p => p.id === selectedProject)?.techStack.map((tech) => (
-                            <span
-                              key={tech}
-                              className={`${
-                                selectedProject < 100 
-                                  ? 'bg-blue-100 text-blue-800' 
-                                  : 'bg-purple-100 text-purple-800'
-                              } px-3 py-1 rounded-full text-sm font-medium`}
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="flex gap-4 pt-4">
-                        {[...codeProjects, ...designProjects].find(p => p.id === selectedProject)?.githubUrl && (
-                          <a
-                            href={[...codeProjects, ...designProjects].find(p => p.id === selectedProject)?.githubUrl}
-                            className="bg-gray-800 hover:bg-gray-900 text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center gap-2"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                    <div>
+                      <h4 className="text-lg font-semibold text-gray-800 mb-3">Tools & Technologies</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedProjectData.techStack.map((tech) => (
+                          <span
+                            key={tech}
+                            className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium"
                           >
-                            <Github size={20} />
-                            View Code
-                          </a>
-                        )}
+                            {tech}
+                          </span>
+                        ))}
                       </div>
                     </div>
-                  )}
+
+                    <div className="flex gap-4 pt-4">
+                      {selectedProjectData.githubUrl && (
+                        <a
+                          href={selectedProjectData.githubUrl}
+                          className="bg-gray-800 hover:bg-gray-900 text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center gap-2"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Github size={20} />
+                          View Code
+                        </a>
+                      )}
+                      {selectedProjectData.liveUrl && (
+                        <a
+                          href={selectedProjectData.liveUrl}
+                          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center gap-2"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <ExternalLink size={20} />
+                          View Live
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Lightbox for Design Projects */}
+          {lightboxOpen && (
+            <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4 animate-fade-in">
+              <div
+                ref={lightboxRef}
+                className="relative max-w-6xl w-full h-full flex flex-col items-center justify-center animate-scale-in"
+              >
+                {/* Close button */}
+                <button
+                  onClick={() => setLightboxOpen(false)}
+                  className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors z-10"
+                >
+                  <X size={32} />
+                </button>
+
+                {/* Image */}
+                <div className="relative w-full h-full flex items-center justify-center">
+                  <img
+                    src={lightboxImage}
+                    alt={lightboxTitle}
+                    className="max-w-full max-h-[85vh] object-contain"
+                  />
+                </div>
+
+                {/* Caption */}
+                <div className="absolute bottom-8 left-0 right-0 text-center text-white">
+                  <h3 className="text-xl font-medium">{lightboxTitle}</h3>
+                  <p className="text-gray-300 text-sm mt-1">
+                    Click outside the image to close
+                  </p>
                 </div>
               </div>
             </div>

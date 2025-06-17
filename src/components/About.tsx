@@ -28,15 +28,15 @@ const About = () => {
             {/* Bio Section */}
             <div>
               <div className="prose prose-lg text-gray-700">
-                <p className="mb-6">
+                <p className="mb-6" style={{ textAlign: 'justify' }}>
                   I am a multidisciplinary professional with a strong foundation in both technology and design. With a passion for solving problems creatively and efficiently, I have developed a unique skill set that combines system automation and visual storytelling. This dual expertise allows me to contribute to both the technical and creative aspects of a project, making me adaptable across diverse teams and workflows.
                 </p>
                 
-                <p className="mb-6">
+                <p className="mb-6" style={{ textAlign: 'justify' }}>
                   In the field of DevOps, I focus on streamlining development lifecycles through automation, continuous integration/deployment (CI/CD), and infrastructure as code. I have hands-on experience with tools like Docker, Kubernetes, Jenkins, Git, and various cloud platforms such as AWS and Azure. My approach emphasizes reliability, scalability, and speed — ensuring that systems run smoothly, securely, and with minimal downtime.
                 </p>
 
-                <p>
+                <p style={{ textAlign: 'justify' }}>
                   As a Graphic Designer, I specialize in creating clean, engaging visuals that communicate ideas clearly and effectively. I am skilled in tools such as Adobe Creative Suite, Figma, and Canva, with experience in branding, UI/UX design, and digital media. My design work is guided by a strong sense of layout, color theory, and user experience, allowing me to create designs that are both functional and visually appealing.
                 </p>
               </div>
@@ -82,5 +82,6 @@ const About = () => {
     </section>
   );
 };
+
 
 export default About;

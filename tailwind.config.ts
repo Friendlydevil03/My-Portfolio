@@ -18,6 +18,10 @@ export default {
 			}
 		},
 		extend: {
+			// Add textAlign here in the extend section
+			textAlign: {
+				justify: 'justify',
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
