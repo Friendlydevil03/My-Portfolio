@@ -12,7 +12,7 @@ const Hero = () => {
 
   const viewResume = () => {
     // Open the resume PDF in a new tab with the correct base URL
-    window.open('/SRIVENKATESH.pdf', '_blank');
+    window.open('/SRIVENKATESH R.pdf', '_blank');
   };
 
   return (
