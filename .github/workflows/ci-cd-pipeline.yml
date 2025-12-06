@@ -9,7 +9,7 @@ on:
    
 env:
   DOCKER_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/my-portfolio
-  REGISTRY: docker. io
+  REGISTRY: docker.io
 
 jobs:
   # Job 1: Build and Test
@@ -101,7 +101,7 @@ jobs:
     - name: Setup Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3. x'
+        python-version: '3.x'
 
     - name: Install Ansible
       run: |
