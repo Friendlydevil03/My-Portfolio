@@ -86,13 +86,14 @@ env:
   DOCKER_IMAGE: YOUR_DOCKERHUB_USERNAME/my-portfolio
 Step 5: Deploy
 Push changes to master branch:
-
+```
+```yaml
 bash
 git add .
 git commit -m "Setup CI/CD pipeline"
 git push origin master
 Watch the workflow run in the Actions tab!
-
+```
 📁 Project Structure
 Code
 My-Portfolio/
