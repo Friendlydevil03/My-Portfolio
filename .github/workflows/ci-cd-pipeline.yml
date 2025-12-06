@@ -110,11 +110,48 @@ jobs:
 
     - name: Configure SSH
       run: |
+        echo "🔧 Setting up SSH configuration..."
         SSH_DIR="$HOME/.ssh"
         mkdir -p "$SSH_DIR"
+        echo "✅ SSH directory created: $SSH_DIR"
+        
+        # Check if private key secret exists
+        if [ -z "${{ secrets.EC2_SSH_PRIVATE_KEY }}" ]; then
+          echo "❌ ERROR: EC2_SSH_PRIVATE_KEY secret is not set"
+          echo "Please add your EC2 private key to GitHub Secrets"
+          exit 1
+        fi
+        echo "✅ EC2_SSH_PRIVATE_KEY secret found"
+        
+        # Check if EC2_HOST secret exists
+        if [ -z "${{ secrets.EC2_HOST }}" ]; then
+          echo "❌ ERROR: EC2_HOST secret is not set"
+          echo "Please add your EC2 host IP/hostname to GitHub Secrets"
+          exit 1
+        fi
+        echo "✅ EC2_HOST secret found: ${{ secrets.EC2_HOST }}"
+        
+        # Write SSH private key
         echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > "$SSH_DIR/id_rsa"
         chmod 600 "$SSH_DIR/id_rsa"
-        ssh-keyscan -H ${{ secrets.EC2_HOST }} >> "$SSH_DIR/known_hosts"
+        echo "✅ SSH private key configured with correct permissions"
+        
+        # Verify key file was created
+        if [ ! -f "$SSH_DIR/id_rsa" ]; then
+          echo "❌ ERROR: Failed to create SSH key file"
+          exit 1
+        fi
+        
+        # Scan host keys
+        echo "🔍 Scanning host keys for ${{ secrets.EC2_HOST }}..."
+        if ssh-keyscan -H ${{ secrets.EC2_HOST }} >> "$SSH_DIR/known_hosts" 2>&1; then
+          echo "✅ SSH host keys added to known_hosts"
+        else
+          echo "❌ ERROR: Failed to scan host keys. Host might be unreachable."
+          exit 1
+        fi
+        
+        echo "✅ SSH configuration complete!"
 
     - name: Create Ansible inventory
       run: |
