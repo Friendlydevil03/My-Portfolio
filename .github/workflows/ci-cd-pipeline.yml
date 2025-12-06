@@ -2,10 +2,11 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ master, main ]
+    branches: [ AWS-EC2 ]
   pull_request:
-    branches: [ master, main ]
-
+    branches: [ AWS-EC2 ]
+  workflow_dispatch:
+  
 env:
   DOCKER_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/my-portfolio
   REGISTRY: docker.io
@@ -87,11 +88,11 @@ jobs:
       run: echo "Image pushed with tags - ${{ steps.meta.outputs.tags }}"
 
   # Job 3: Deploy to AWS EC2
-  deploy:
+  deploy-to-aws:
     name: Deploy to AWS EC2
     needs: docker-build-push
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/AWS-EC2'
     
     steps:
     - name: Checkout code
