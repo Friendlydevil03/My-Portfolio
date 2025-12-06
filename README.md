@@ -1,126 +1,112 @@
-🚀 Portfolio Application – CI/CD to AWS EC2
+# 🚀 DevOps CI/CD Pipeline – Portfolio Deployment (AWS)
 
-This project implements a complete DevOps pipeline to build and deploy a web application using:
+This project demonstrates a fully automated CI/CD pipeline using:
 
-GitHub Actions
+- GitHub Actions
+- Docker & DockerHub
+- Ansible
+- AWS EC2 (Ubuntu)
+- Nginx
 
-Docker & DockerHub
-
-Ansible
-
-AWS EC2
-
-Every time code is pushed to the AWS-EC2 branch, a fully automated pipeline runs:
+Every time code is pushed to the `AWS-EC2` branch, the pipeline runs:
 
 ✔ Build → Test → Docker → Deploy → Verify
 
-📐 Architecture
-Developer Push Code
-        |
-        v
-GitHub Repository (AWS-EC2 Branch)
-        |
-        v
-GitHub Actions CI/CD Pipeline
-        |
-        ├─ Build & Test Application
-        ├─ Build Docker Image
-        ├─ Push Image to DockerHub
-        └─ Ansible Remote Deploy
-                |
-                v
-          AWS EC2 Server (Docker)
-                |
-                v
-           Nginx Serves Portfolio
+---
 
-🛠️ Technologies Used
-Component	Technology
-CI/CD	GitHub Actions
-Containerization	Docker
-Registry	DockerHub
-Provisioning	Ansible
-Cloud	AWS EC2 (Ubuntu)
-Web Server	Nginx
-Source Control	Git / GitHub
-🔄 CI/CD Workflow
-Trigger
+## 📐 Architecture Overview
+
+        Developer Push Code ──▶ GitHub Repository (AWS-EC2 Branch)
+                                └▶ GitHub Actions CI/CD Pipeline
+                                        ├─ Build & Test Application
+                                        ├─ Build Docker Image
+                                        ├─ Push Image to DockerHub
+                                        └─ Ansible Remote Deploy
+                                        └─ AWS EC2 Server
+                                        └─ Application Served Live
+---
+
+## 🛠️ Technologies Used
+
+| Component          | Technology |
+|-------------------|------------|
+| CI/CD             | GitHub Actions |
+| Containerization  | Docker |
+| Registry          | DockerHub |
+| Provisioning      | Ansible |
+| Cloud             | AWS EC2 |
+| OS                | Ubuntu |
+| Web Server        | Nginx |
+| Version Control   | Git / GitHub |
+
+---
+
+## 🔄 CI/CD Workflow
 
 Pipeline runs when pushing to:
 
 AWS-EC2 branch
 
-Stages
+### Stages
 
-Build & Test
+1️⃣ **Build & Test**
+- Install dependencies
+- Run linter
+- Build frontend
 
-Install dependencies
+2️⃣ **Docker Build**
+- Build image
+- Tag with `SHA` & `latest`
+- Push to DockerHub
 
-Run linter & build
+3️⃣ **Deploy to AWS**
+- SSH into EC2 using Ansible
+- Pull latest Docker image
+- Restart container
+- Verify deployment
 
-Docker Build
+---
 
-Build image
+## 🌐 Live Deployment
 
-Tag image with SHA + latest
+👉 Running on your EC2 server:
 
-Push to DockerHub
+http://3.108.65.218/
 
-Deploy to AWS
 
-SSH into EC2
+---
 
-Pull latest image
+## 📦 Docker Image
 
-Restart container
+Pull the latest image:
 
-Verify service
-
-📸 Screenshots
-GitHub Actions – Successful Run
-
-(Add screenshot here)
-
-AWS EC2 Running Container
-
-(Add screenshot here)
-
-🌐 Live Demo
-
-📍 Application is deployed at:
-
-👉 http://<your-public-ip>
-
-or
-
-👉 http://ec2-3-108-65-218.ap-south-1.compute.amazonaws.com
-
-🔐 Secrets Used (GitHub Actions)
-Secret	Description
-DOCKERHUB_USERNAME	DockerHub username
-DOCKERHUB_TOKEN	DockerHub access token
-EC2_HOST	EC2 public DNS
-EC2_USER	ubuntu
-EC2_SSH_PRIVATE_KEY	EC2 SSH private key
-📦 Docker Registry
-
-👉 Image is available on DockerHub:
-
+```bash
 docker pull srivenkatesh03/my-portfolio:latest
+```
+🔐 GitHub Secrets Used
+Secret Name	        Description
 
-🧪 How to Deploy Manually
+DOCKERHUB_USERNAME	        DockerHub Account
 
-Run workflow:
+DOCKERHUB_TOKEN        	DockerHub Access Token
 
-GitHub → Actions → Deploy to AWS EC2 → Run workflow
+EC2_HOST	        EC2 Public DNS
+
+EC2_USER	        ubuntu
+
+EC2_SSH_PRIVATE_KEY	        Private key for SSH
 
 
-Choose branch:
 
-AWS-EC2
 
-🏆 Final Result
+<img width="1888" height="895" alt="image" src="https://github.com/user-attachments/assets/30427a74-1fdf-41c9-ad3e-6244f5333271" />
+                                                  CI/CD pipeline run on GitHub Actions
+                                                  
+<img width="1905" height="907" alt="image" src="https://github.com/user-attachments/assets/4ac35ed5-c994-4093-bbd3-466405ff68a6" />
+                                                      Ansible deployment on EC
+<img width="1906" height="708" alt="image" src="https://github.com/user-attachments/assets/acc61bdd-09b0-4e52-9b41-f36ee3d40afd" />
+                                                      Application running on EC2
+<img width="1918" height="975" alt="image" src="https://github.com/user-attachments/assets/d41556d9-40be-4bd7-8f6d-15f1debb40ed" />
 
-✔ Fully automated deployment
-✔ Zero manual steps
-✔ Production-like DevOps pipeline
+
+
