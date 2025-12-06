@@ -129,7 +129,7 @@ jobs:
           echo "Please add your EC2 host IP/hostname to GitHub Secrets"
           exit 1
         fi
-        echo "✅ EC2_HOST secret found: ${{ secrets.EC2_HOST }}"
+        echo "✅ EC2_HOST secret found"
         
         # Write SSH private key
         echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > "$SSH_DIR/id_rsa"
@@ -143,11 +143,12 @@ jobs:
         fi
         
         # Scan host keys
-        echo "🔍 Scanning host keys for ${{ secrets.EC2_HOST }}..."
+        echo "🔍 Scanning host keys..."
         if ssh-keyscan -H ${{ secrets.EC2_HOST }} >> "$SSH_DIR/known_hosts" 2>&1; then
           echo "✅ SSH host keys added to known_hosts"
         else
           echo "❌ ERROR: Failed to scan host keys. Host might be unreachable."
+          echo "Please verify that EC2_HOST is correct and the host is accessible."
           exit 1
         fi
         
